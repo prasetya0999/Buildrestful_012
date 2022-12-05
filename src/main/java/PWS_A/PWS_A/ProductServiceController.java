@@ -44,30 +44,35 @@ public class ProductServiceController {
     //Untuk Menambahkan data pada page "/products"
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     public ResponseEntity<Object> createProduct(@RequestBody Product product){
-        if(productRepo.containsKey(product.getId()))
-        {
+        //Jika ID yang akan di tambahkan sudah ada maka data tidak akan berubah
+        if(productRepo.containsKey(product.getId())){
             return new ResponseEntity<>("ID Product is Exist",HttpStatus.CONFLICT);
         }
-        else
-        {
+        else {//Jika data yg akan di tambahkan belum ada maka akan sukses
             productRepo.put(product.getId(), product);
             return new ResponseEntity<>("Product is created successfully", HttpStatus.CREATED);   
-        }
-        
+        }    
     }
     
     //Untuk Mengedit data pada page "/products"
     @RequestMapping(value = "/products/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Object> updateProduct(@PathVariable("id") String id, @RequestBody Product product){
-        productRepo.remove(id);
-        product.setId(id);
-        productRepo.put(id, product);
-        return new ResponseEntity<>("Product is update seccessfully", HttpStatus.OK);
+        //jika hendak mengedit data tidak akan berjalan apabila ID Product tidak ada
+        if(!productRepo.containsKey(id)){
+            return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
+        }
+        else {//Edit akan berhasil jika ID yang dimasukkan benar
+            productRepo.remove(id);
+            product.setId(id);
+            productRepo.put(id, product);
+            return new ResponseEntity<>("Product is update seccessfully", HttpStatus.OK);
+        }
     }
     
     //Untuk Menghapus data pada page "/products"
     @RequestMapping(value = "/products/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> delete(@PathVariable("id") String id){
+    public ResponseEntity<Object> delete(@PathVariable("id") String id)
+    {
         productRepo.remove(id);
         return new ResponseEntity<>("Product is deleted successfully", HttpStatus.OK);
     }
