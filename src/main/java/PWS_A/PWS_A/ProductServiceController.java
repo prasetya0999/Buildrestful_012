@@ -30,16 +30,18 @@ public class ProductServiceController {
         honey.setName("Honey"); //Memasukkan nama
         honey.setPrice(10000);
         honey.setDiskon(10);
-        honey.getTotal();
+        Integer total = honey.getPrice()-((honey.getPrice()*honey.getDiskon())/100);
+        honey.setTotal(total);
         productRepo.put(honey.getId(), honey);
         
-        Product almond = new Product();//Membuat variabel almond
-        almond.setId("2");//Memasukkan id
-        almond.setName("Almond");//Memasukkan nama
-        almond.setPrice(5000);
-        almond.setDiskon(10);
-        honey.getTotal();
-        productRepo.put(almond.getId(),almond);
+//        Product almond = new Product();//Membuat variabel almond
+//        almond.setId("2");//Memasukkan id
+//        almond.setName("Almond");//Memasukkan nama
+//        almond.setPrice(5000);
+//        almond.setDiskon(10);
+//        Integer  total2 = almond.getPrice()-((almond.getPrice()*almond.getDiskon())/100);
+//        almond.setTotal(total2);
+//        productRepo.put(almond.getId(),almond);
     }
     
     //Menampilkan page "/products"
@@ -56,6 +58,8 @@ public class ProductServiceController {
             return new ResponseEntity<>("ID Product is Exist",HttpStatus.CONFLICT);
         }
         else {//Jika data yg akan di tambahkan belum ada maka akan sukses
+            Integer total = product.getPrice()-((product.getPrice()*product.getDiskon())/100);
+            product.setTotal(total);
             productRepo.put(product.getId(), product);
             return new ResponseEntity<>("Product is created successfully", HttpStatus.CREATED);   
         }  

@@ -16,7 +16,7 @@ public class Product {
     private Integer total;
 
     public Integer getTotal() {
-        return getPrice()-((getPrice()*getDiskon())/100);
+        return total;
     }
 
     public void setTotal(Integer total) {
