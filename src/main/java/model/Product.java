@@ -11,6 +11,33 @@ package model;
 public class Product {
     private String id;
     private String name;
+    private Integer price;
+    private Integer diskon;
+    private Integer total;
+
+    public Integer getTotal() {
+        return getPrice()-((getPrice()*getDiskon())/100);
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public Integer getDiskon() {
+        return diskon;
+    }
+
+    public void setDiskon(Integer diskon) {
+        this.diskon = diskon;
+    }
 
     public String getId() {
         return id;

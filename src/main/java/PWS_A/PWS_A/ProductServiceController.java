@@ -6,6 +6,7 @@ package PWS_A.PWS_A;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import model.Product;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,17 +22,23 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController //membuat RestController
 public class ProductServiceController {
-    private static Map<String, Product> productRepo = new HashMap<>();//Membuat HasMap untuk menyimpan data pada Product.Java
+    public static Map<String, Product> productRepo = new HashMap<>();//Membuat HasMap untuk menyimpan data pada Product.Java
     static {
         
         Product honey = new Product(); //Membuat variabel honey
         honey.setId("1"); //Memasukkan Id
-        honey.setName("Honey"); //Memasukkan nama 
+        honey.setName("Honey"); //Memasukkan nama
+        honey.setPrice(10000);
+        honey.setDiskon(10);
+        honey.getTotal();
         productRepo.put(honey.getId(), honey);
         
         Product almond = new Product();//Membuat variabel almond
         almond.setId("2");//Memasukkan id
         almond.setName("Almond");//Memasukkan nama
+        almond.setPrice(5000);
+        almond.setDiskon(10);
+        honey.getTotal();
         productRepo.put(almond.getId(),almond);
     }
     
@@ -51,7 +58,8 @@ public class ProductServiceController {
         else {//Jika data yg akan di tambahkan belum ada maka akan sukses
             productRepo.put(product.getId(), product);
             return new ResponseEntity<>("Product is created successfully", HttpStatus.CREATED);   
-        }    
+        }  
+        
     }
     
     //Untuk Mengedit data pada page "/products"
